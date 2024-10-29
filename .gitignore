@@ -9,4 +9,5 @@ node_modules/
 
 # Ignore build directories
 dist/
-build/
+# build/
+package-lock.json
