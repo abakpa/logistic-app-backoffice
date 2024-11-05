@@ -20,7 +20,7 @@ import {
 } from '../slices/dispatchSlice'
 import io from 'socket.io-client'
 import { fetchNotificationSuccess } from '../slices/notification'
-const socket = io.connect(`${url}`)
+const socket = io.connect(url)
 
  function* fetchDispatchSaga(){
     try {
