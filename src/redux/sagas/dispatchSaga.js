@@ -1,6 +1,6 @@
 import {call, put, takeLatest} from 'redux-saga/effects'
 import axios from 'axios'
-
+import { url } from './url'
 import {
     fetchDispatchRequest,
     fetchDispatchSuccess,
@@ -20,12 +20,12 @@ import {
 } from '../slices/dispatchSlice'
 import io from 'socket.io-client'
 import { fetchNotificationSuccess } from '../slices/notification'
-const socket = io.connect('http://localhost:4000')
+const socket = io.connect(`${url}`)
 
  function* fetchDispatchSaga(){
     try {
        
-        const response = yield call(axios.get, 'http://localhost:4000/api/dispatch')
+        const response = yield call(axios.get, `${url}/api/dispatch`)
         yield put(fetchDispatchSuccess(response.data))
     } catch (error) {
         yield put(fetchDispatchFailure(error.response.data.message))
@@ -34,7 +34,7 @@ const socket = io.connect('http://localhost:4000')
  function* fetchActiveDispatchSaga(){
     try {
        
-        const response = yield call(axios.get, 'http://localhost:4000/api/dispatch/active')
+        const response = yield call(axios.get, `${url}/api/dispatch/active`)
         yield put(fetchActiveDispatchSuccess(response.data))
     } catch (error) {
         yield put(fetchActiveDispatchFailure(error.response.data.message))
@@ -51,7 +51,7 @@ function* fetchDispatchByDriverSaga(){
                 Authorization: `Bearer ${token}`
             }
         }
-        const response = yield call(axios.get,'http://localhost:4000/api/dispatch/driver',config);
+        const response = yield call(axios.get,`${url}/api/dispatch/driver`,config);
         yield put(fetchDispatchByDriverSuccess(response.data))
         // navigate('/OrderByDriver')
     } catch (error) {
@@ -68,7 +68,7 @@ function* createDispatchByDriverSaga(action){
                 Authorization: `Bearer ${token}`
             }
         }
-        const response = yield call(axios.put,`http://localhost:4000/api/orders/dispatch/${orderId}`,{},config);
+        const response = yield call(axios.put,`${url}/api/orders/dispatch/${orderId}`,{},config);
         console.log('response 1',response.data)
 
         if(!response.data.status) return yield put(fetchNotificationSuccess(response.data))
@@ -92,7 +92,7 @@ function* createDispatchSaga(action){
                 Authorization: `Bearer ${token}`
             }
         }
-        const response = yield call(axios.put,`http://localhost:4000/api/dispatch/status/${orderId}`,{},config);
+        const response = yield call(axios.put,`${url}/api/dispatch/status/${orderId}`,{},config);
         yield put(createDispatchSuccess(response.data))
         // navigate('/OrderByDriver')
     } catch (error) {

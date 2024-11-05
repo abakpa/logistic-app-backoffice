@@ -20,11 +20,12 @@ import {
     fetchOrderByIdSuccess,
     fetchOrderByIdFailure
 } from '../slices/orderSlice'
+import { url } from './url'
 
  function* fetchOrderSaga(){
     try {
     
-        const response = yield call(axios.get, 'http://localhost:4000/api/orders')
+        const response = yield call(axios.get, `${url}/api/orders`)
         yield put(fetchOrderSuccess(response.data))
     } catch (error) {
         yield put(fetchOrderFailure(error.response.data.message))
@@ -38,7 +39,7 @@ import {
                 Authorization: `Bearer ${token}`
             }
         }
-        const response = yield call(axios.get, 'http://localhost:4000/api/orders/user',config)
+        const response = yield call(axios.get, `${url}/api/orders/user`,config)
         yield put(fetchOrderByUserSuccess(response.data))
     } catch (error) {
         yield put(fetchOrderByUserFailure(error.response.data.message))
@@ -52,7 +53,7 @@ import {
                 Authorization: `Bearer ${token}`
             }
         }
-        const response = yield call(axios.get, 'http://localhost:4000/api/orders/orderbydriver',config)
+        const response = yield call(axios.get, `${url}/api/orders/orderbydriver`,config)
         yield put(fetchDriverOrderSuccess(response.data))
     } catch (error) {
         yield put(fetchDriverOrderFailure(error.response.data.message))
@@ -66,7 +67,7 @@ import {
                 Authorization: `Bearer ${token}`
             }
         }
-        const response = yield call(axios.get, 'http://localhost:4000/api/orders/orderforpickup',config)
+        const response = yield call(axios.get, `${url}/api/orders/orderforpickup`,config)
         yield put(fetchOrderForPickupSuccess(response.data))
     } catch (error) {
         yield put(fetchOrderForPickupFailure(error.response.data.message))
@@ -82,7 +83,7 @@ function* createOrderSaga(action){
                 Authorization: `Bearer ${token}`
             }
         }
-        const response = yield call(axios.post,'http://localhost:4000/api/orders', details,config);
+        const response = yield call(axios.post,`${url}/api/orders`, details,config);
         yield put(createOrderSuccess(response.data))
         navigate('/Order')
     } catch (error) {
@@ -98,7 +99,7 @@ function* fetchOrderByIdSaga(action){
                Authorization: `Bearer ${token}`
            }
        }
-       const response = yield call(axios.get, `http://localhost:4000/api/orders/${orderId}`,{},config)
+       const response = yield call(axios.get, `${url}/api/orders/${orderId}`,{},config)
        yield put(fetchOrderByIdSuccess(response.data))
        navigate(`/singleorder/${orderId}`)
    } catch (error) {
