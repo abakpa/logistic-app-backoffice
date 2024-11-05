@@ -11,7 +11,7 @@ import {
 
 function* fetchAdminsSaga(){
     try {
-        const response = yield call(axios.get, 'http://localhost:4000/api/admin');
+        const response = yield call(axios.get, 'https://logistic-app-back-end.onrender.com/api/admin');
         yield put(fetchAdminsSuccess(response.data))
     } catch (error) {
         yield put(fetchAdminsFailure(error.response.data.message))
@@ -20,7 +20,7 @@ function* fetchAdminsSaga(){
 function* createAdminSaga(action){
     const {details,navigate} = action.payload
     try {
-        const response = yield call(axios.post,'http://localhost:4000/api/admin', details);
+        const response = yield call(axios.post,'https://logistic-app-back-end.onrender.com/api/admin', details);
         yield put(createAdminSuccess(response.data))
         navigate('/login')
     } catch (error) {

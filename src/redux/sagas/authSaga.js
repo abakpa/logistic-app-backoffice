@@ -12,7 +12,7 @@ import {
 function* loginSaga(action){
     const {credentials,navigate} = action.payload
     try {
-        const response = yield call(axios.post,'http://localhost:4000/api/login/admin', credentials);
+        const response = yield call(axios.post,'https://logistic-app-back-end.onrender.com/api/login/admin', credentials);
         const { token,admin } = response.data;
         localStorage.setItem('authToken', token);
         localStorage.setItem('adminId', admin.id);
